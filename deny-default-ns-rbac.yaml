@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: deny-pod-creation
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: deny-pod-creation-binding
+  namespace: default
+subjects:
+  - kind: User
+    name: "*"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: deny-pod-creation
+  apiGroup: rbac.authorization.k8s.io
